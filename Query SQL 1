@@ -1,0 +1,33 @@
+-- Select table transactions
+SELECT * FROM sales.transactions;
+
+-Check unique currency in transaction
+Select Distinct currency from sales.transactions;
+
+-- Select table product
+SELECT * FROM sales.products;
+
+-- Select table markets
+SELECT * FROM sales.markets;
+
+-- Select table date
+SELECT * FROM sales.date;
+
+-Check unique year in date
+SELECT Distinct year FROM sales.date;
+
+-- Join transactions table and date to filter year.
+SELECT * FROM sales.transactions INNER JOIN sales.date On sales.transactions.order_date = sales.date.date Where year=2019;
+
+-- Join transactions table and date to filter year, find which month have the month in 2019 have the most sale
+
+SELECT Sum(sales.transactions.sales_amount),sales.date.month_name
+FROM sales.transactions INNER JOIN sales.date On sales.transactions.order_date = sales.date.date 
+Where year=2019 Group by sales.date.month_name;
+
+-- Join transactions table and date to find which month have the month in all table have the most sale
+
+SELECT Sum(sales.transactions.sales_amount) as Total,sales.date.month_name
+FROM sales.transactions INNER JOIN sales.date On sales.transactions.order_date = sales.date.date 
+Group by sales.date.month_name ORDER BY Sum(sales.transactions.sales_amount) DESC;
+
